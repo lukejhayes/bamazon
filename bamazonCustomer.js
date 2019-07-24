@@ -21,7 +21,7 @@ var connection = mysql.createConnection({
       inquirer.prompt({
           type: "confirm",
           name: "intro",
-          message: "Welcome to Bamazon! Would you like to view our available inventory?",
+          message: "Welcome to Bamazon! Would you like to view our available inventory?\n",
           default: true
         })
         .then(function(answer){
@@ -46,6 +46,7 @@ var connection = mysql.createConnection({
           var price = response[i].price;
           var stockQuantity = response[i].stock_quantity;
           console.log("Id: " + itemId + " | Product name: " + productName + " | Department: " +  departmentName + " |  Price: " + "$" + price + " | Stock Qty: " + stockQuantity);
+          console.log("----------------------------------------------------------------------------------------\n");
     }
     userInput();
   });
@@ -79,12 +80,18 @@ function userPurchase(items, amtRequested){
       if(err) throw err;
       if(amtRequested <= response[0].stock_quantity){
         var cost = response[0].price * amtRequested;
-        console.log("Great, let's get you your items!")
-        console.log("Your total cost is: " + "$" + cost )
+        console.log("\n************************************");
+        console.log("************************************");
+        console.log("Great, let's get you your items!");
+        console.log("Your total cost is: " + "$" + cost);
+        console.log("************************************");
+        console.log("************************************");
       }
       else {
+        console.log("\n###############################################");
         console.log("Insufficient stock available. Please try again.");
+        console.log("###############################################\n");
+        inventoryList();
       };
-      inventoryList();
     });
   }

@@ -63,8 +63,10 @@ function displayInventory() {
 	connection.query(queryStr, function(err, data) {
 		if (err) throw err;
 
-		console.log('Existing Inventory: ');
-		console.log('...................\n');
+        console.log('...................\n');
+        console.log('Existing Inventory: ');
+        console.log('\n...................\n');
+        console.log("---------------------------------------------------------------------------------------------------\n");
 
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
@@ -78,8 +80,7 @@ function displayInventory() {
 			console.log(strOut);
 		}
 
-	  	console.log("---------------------------------------------------------------------\n");
-
+          console.log("---------------------------------------------------------------------------------------------------\n");
 		promptManagerAction();
 	})
 }
@@ -88,14 +89,15 @@ function displayInventory() {
 function displayLowInventory() {
 
 	// Constructs the database query string.
-	queryStr = 'SELECT * FROM products WHERE stock_quantity < 10';
+	queryStr = 'SELECT * FROM products WHERE stock_quantity < 20';
 
 	// Creates the database query.
 	connection.query(queryStr, function(err, data) {
 		if (err) throw err;
-
-		console.log('Low Inventory Items (less than 10): ');
-		console.log('................................\n');
+        console.log('\n...............................');
+		console.log('Low Inventory Items (UNDER 20): ');
+        console.log('...............................\n');
+        console.log("---------------------------------------------------------------------------------------------------\n");        
 
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
@@ -109,8 +111,7 @@ function displayLowInventory() {
 			console.log(strOut);
 		}
 
-	  	console.log("---------------------------------------------------------------------\n");
-
+        console.log("---------------------------------------------------------------------------------------------------\n");
 		promptManagerAction();
 	})
 }
@@ -172,7 +173,9 @@ function addInventory() {
 			if (err) throw err;
 
 			if (data.length === 0) {
-				console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
+                console.log("######################################################");
+                console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
+                console.log("######################################################");
 				addInventory();
                 } 
             else {
@@ -186,9 +189,10 @@ function addInventory() {
 
 				// Update the inventory based off user input.
 				connection.query(updateQueryStr, function(err, data) {
-					if (err) throw err;
+                    if (err) throw err;
+                    console.log("---------------------------------------------------------------------------------------------------\n");
 					console.log('Stock count for Item ID ' + item + ' has been updated to ' + (productData.stock_quantity + addQuantity) + '.');
-					console.log("\n---------------------------------------------------------------------\n");
+                    console.log("---------------------------------------------------------------------------------------------------\n");
 
 					promptManagerAction();
 				})
